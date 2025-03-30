@@ -11,9 +11,3 @@ meson.override_dependency('cpp-forms', cpp_forms_dep)
 if not meson.is_subproject()
     subdir('tests')
 endif
-
-# Build examples only when not being used as a subproject
-# if not meson.is_subproject()
-#   subdir('examples')
-# endif
-test('Form Tests', test_exe, timeout: 10)

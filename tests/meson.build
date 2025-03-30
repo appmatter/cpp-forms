@@ -1,3 +1,4 @@
+
 catch2 = dependency('catch2', fallback: ['catch2', 'catch2_dep'])
 
 test_exe = executable(
