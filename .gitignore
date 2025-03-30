@@ -1,3 +1,19 @@
+# Editor files
+.vscode/*
+
+# Build files
+build/*
+
+# Subprojects
+subprojects/*
+
+# Except packagefiles folder and its contents
+!subprojects/packagefiles/
+!subprojects/packagefiles/**
+!subprojects/**.wrap
+
+
+
 # Prerequisites
 *.d
 
