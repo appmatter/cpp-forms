@@ -18,7 +18,7 @@ struct User
 TEST_CASE("Form tracks changes", "[form]")
 {
   User user{"Alice", "alice@example.com"};
-  Form<User> form(user);
+  cpp_forms::Form<User> form(user);
 
   REQUIRE_FALSE(form.isDirty());
 
@@ -32,7 +32,7 @@ TEST_CASE("Form tracks changes", "[form]")
 TEST_CASE("Form reset discards changes", "[form]")
 {
   User user{"Alice", "alice@example.com"};
-  Form<User> form(user);
+  cpp_forms::Form<User> form(user);
 
   form.data().email = "bob@example.com";
   form.reset();
@@ -43,7 +43,7 @@ TEST_CASE("Form reset discards changes", "[form]")
 TEST_CASE("Validation rules are applied", "[form]")
 {
   User user{"", "notanemail"};
-  Form<User> form(user);
+  cpp_forms::Form<User> form(user);
 
   form.addValidation("name", [](const User &u)
                      { return u.name.empty() ? std::optional<std::string>{"Name is required"}

@@ -6,52 +6,66 @@
 #include <type_traits>
 #include <unordered_map>
 
-template <typename T> class Form {
-public:
-  using ValidationRule = std::function<std::optional<std::string>(const T &)>;
+namespace cpp_forms
+{
 
-  Form(T &original) : originalRef(original), workingCopy(original) {}
+  template <typename T>
+  class Form
+  {
+  public:
+    using ValidationRule = std::function<std::optional<std::string>(const T &)>;
 
-  T &data() { return workingCopy; }
+    Form(T &original) : originalRef(original), workingCopy(original) {}
 
-  void commit() { originalRef = workingCopy; }
+    T &data() { return workingCopy; }
 
-  void reset() {
-    workingCopy = originalRef;
-    errors.clear();
-  }
+    void commit() { originalRef = workingCopy; }
 
-  bool isDirty() const { return !(originalRef == workingCopy); }
+    void reset()
+    {
+      workingCopy = originalRef;
+      errors.clear();
+    }
 
-  void addValidation(const std::string &field, ValidationRule rule) {
-    rules[field] = rule;
-  }
+    bool isDirty() const { return !(originalRef == workingCopy); }
 
-  void validate() {
-    errors.clear();
-    for (const auto &[field, rule] : rules) {
-      if (auto result = rule(workingCopy)) {
-        errors[field] = *result;
+    void addValidation(const std::string &field, ValidationRule rule)
+    {
+      rules[field] = rule;
+    }
+
+    void validate()
+    {
+      errors.clear();
+      for (const auto &[field, rule] : rules)
+      {
+        if (auto result = rule(workingCopy))
+        {
+          errors[field] = *result;
+        }
       }
     }
-  }
 
-  bool hasError(const std::string &field) const {
-    return errors.find(field) != errors.end();
-  }
+    bool hasError(const std::string &field) const
+    {
+      return errors.find(field) != errors.end();
+    }
 
-  std::string error(const std::string &field) const {
-    auto it = errors.find(field);
-    return it != errors.end() ? it->second : "";
-  }
+    std::string error(const std::string &field) const
+    {
+      auto it = errors.find(field);
+      return it != errors.end() ? it->second : "";
+    }
 
-  const std::unordered_map<std::string, std::string> &allErrors() const {
-    return errors;
-  }
+    const std::unordered_map<std::string, std::string> &allErrors() const
+    {
+      return errors;
+    }
 
-private:
-  T &originalRef;
-  T workingCopy;
-  std::unordered_map<std::string, ValidationRule> rules;
-  std::unordered_map<std::string, std::string> errors;
-};
+  private:
+    T &originalRef;
+    T workingCopy;
+    std::unordered_map<std::string, ValidationRule> rules;
+    std::unordered_map<std::string, std::string> errors;
+  };
+}
