@@ -16,10 +16,4 @@ find src include tests -type f \( -name '*.cpp' -o -name '*.hpp' \) \
   | entr -c ./scripts/test.sh
 
 
-# scripts/test_ci.sh - Run suite tests via Meson (CI-friendly)
-
-meson test -C build --suite=form --verbose \
-  --test-args='--reporter console --durations yes'
-
-
 echo "✅ Done!"
