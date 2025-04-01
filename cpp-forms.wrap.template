@@ -1,5 +1,4 @@
 [wrap-git]
-url = 'https://github.com/appmatter/cpp-forms.git'
-branch = 'main'
-version = '0.1.0' # optional, defaults to latest. Specify a commit hash or tag.
+url = https://github.com/appmatter/cpp-forms.git
+revision = main # Specify a commit hash, branch or tag.
  
